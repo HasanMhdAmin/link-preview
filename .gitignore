@@ -16,6 +16,8 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
+!**/src/main/resources/credentials.properties
+src/main/resources/credentials.properties
 
 ### IntelliJ IDEA ###
 .idea
@@ -25,7 +27,6 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-!**/src/main/resources/credentials.properties
 
 
 ### NetBeans ###
