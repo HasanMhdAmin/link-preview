@@ -18,6 +18,7 @@ bin/
 !**/src/test/**/bin/
 !**/src/main/resources/credentials.properties
 src/main/resources/credentials.properties
+src/main/resources/previewKeystore.p12
 
 ### IntelliJ IDEA ###
 .idea
