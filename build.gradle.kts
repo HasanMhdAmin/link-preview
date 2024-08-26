@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URI
 
 plugins {
     id("org.springframework.boot") version "3.1.3"
@@ -15,6 +16,10 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
 }
 
+configure<org.springframework.boot.gradle.dsl.SpringBootExtension> {
+    buildInfo()
+}
+
 repositories {
     mavenCentral()
 }
@@ -25,6 +30,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-maven-noarg")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation(files("${rootDir}/lib/Hostname-1.0-SNAPSHOT.jar"))
 
     implementation("org.jsoup:jsoup:1.15.3")
 

@@ -1,6 +1,7 @@
 package de.isthasan.inbiolink.controller.linkPreview
 
 import de.isthasan.inbiolink.model.dto.linkPreview.LinkPreviewResponse
+import hostname.Hostname
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.apache.commons.lang3.StringUtils
 import org.jsoup.Jsoup
@@ -39,11 +40,10 @@ class LinkPreviewController {
         val ogDesc: String = getMetaTagContent(document, "meta[property=og:description]")
         val ogImage: String = getMetaTagContent(document, "meta[property=og:image]")
         val ogImageAlt: String = getMetaTagContent(document, "meta[property=og:image:alt]")
-
-        // TODO use ogUrl to get the domain name.
+        val domain = Hostname.getHostname(url)
 
         return LinkPreviewResponse(
-            "domain",
+            domain,
             url,
             StringUtils.defaultIfBlank(ogTitle, title),
             StringUtils.defaultIfBlank(ogDesc, desc),
