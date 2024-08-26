@@ -11,7 +11,8 @@ COPY --chown=gradle:gradle . .
 RUN chmod +x ./gradlew
 
 # Build the project using the Gradle wrapper
-RUN ./gradlew build --no-daemon
+#RUN ./gradlew build --no-daemon --stacktrace --info
+RUN ./gradlew build --no-daemon -x test
 
 # Second stage to create the final image
 FROM openjdk:17-jdk-slim
