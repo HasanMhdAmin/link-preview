@@ -12,15 +12,16 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @Tag(name = "Health")
 class HealthController {
-    @Value("\${app.version}")
-    private val version: String = ""
-
-    @Value("\${server.port}")
-    private val port: String = ""
+//    @Value("\${app.version}")
+//    private val version: String = ""
+//
+//    @Value("\${server.port}")
+//    private val port: String = ""
 
 
     @GetMapping
     fun isAlive(): String {
-        return "Hey, InBioLink is running on port $port with version: $version"
+        return "Hey, I'm alive!"
+//        return "Hey, InBioLink is running on port $port with version: $version"
     }
 }
