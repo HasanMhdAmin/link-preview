@@ -32,7 +32,9 @@ class LinkPreviewController {
         if (!url.startsWith("http")) {
             targetUrl = "http://$url"
         }
-        val document: Document = Jsoup.connect(targetUrl).get()
+        val document: Document = Jsoup.connect(targetUrl)
+            .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+            .get()
         val title: String = getMetaTagContent(document, "meta[name=title]")
         val desc: String = getMetaTagContent(document, "meta[name=description]")
         val ogUrl: String = StringUtils.defaultIfBlank(getMetaTagContent(document, "meta[property=og:url]"), url)
