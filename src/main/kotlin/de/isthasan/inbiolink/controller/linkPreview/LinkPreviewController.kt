@@ -35,18 +35,21 @@ class LinkPreviewController {
         val document: Document = Jsoup.connect(targetUrl)
             .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
             .get()
-        val title: String = getMetaTagContent(document, "meta[name=title]")
-        val desc: String = getMetaTagContent(document, "meta[name=description]")
+        // Get Open Graph meta tags
+        val title: String = getMetaTagContent(document, "meta[name=title]") ?: getMetaTagContent(document, "title") ?: document.title()
+        val desc: String = getMetaTagContent(document, "meta[name=description]") ?: getMetaTagContent(document, "description") ?: ""
         val ogUrl: String = StringUtils.defaultIfBlank(getMetaTagContent(document, "meta[property=og:url]"), url)
-        val ogTitle: String = getMetaTagContent(document, "meta[property=og:title]")
-        val ogDesc: String = getMetaTagContent(document, "meta[property=og:description]")
-        val ogImage: String = getMetaTagContent(document, "meta[property=og:image]")
-        val ogImageAlt: String = getMetaTagContent(document, "meta[property=og:image:alt]")
+        val ogTitle: String = StringUtils.defaultIfBlank(getMetaTagContent(document, "meta[property=og:title]"), title)
+        val ogDesc: String = StringUtils.defaultIfBlank(getMetaTagContent(document, "meta[property=og:description]"), desc)
+        val ogImage: String = getMetaTagContent(document, "meta[property=og:image]") ?: ""
+        val ogImageAlt: String = getMetaTagContent(document, "meta[property=og:image:alt]") ?: ""
+
         val domain = Hostname.getHostname(url)
 
         return LinkPreviewResponse(
             domain,
             url,
+            ogUrl,
             StringUtils.defaultIfBlank(ogTitle, title),
             StringUtils.defaultIfBlank(ogDesc, desc),
             ogImage,
@@ -60,8 +63,8 @@ class LinkPreviewController {
      * @param document
      * @return
      */
-    private fun getMetaTagContent(document: Document, cssQuery: String): String {
+    private fun getMetaTagContent(document: Document, cssQuery: String): String? {
         val elm: Element? = document.select(cssQuery).first()
-        return elm?.attr("content") ?: ""
+        return elm?.attr("content")
     }
 }
