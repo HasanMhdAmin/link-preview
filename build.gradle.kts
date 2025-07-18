@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.net.URI
+import java.util.*
 
 plugins {
     id("org.springframework.boot") version "3.1.3"
@@ -9,8 +10,19 @@ plugins {
     kotlin("plugin.jpa") version "1.8.22"
 }
 
+// Define a function to load the property
+fun loadAppVersion(): String {
+    val props = Properties()
+    val propsFile = file("src/main/resources/application.properties")
+    propsFile.inputStream().use { props.load(it) }
+    return props.getProperty("app.version") ?: ""
+}
+
+// Use it in your build script
+val appVersion = loadAppVersion()
+
 group = "de.isthasan"
-version = "0.0.1-SNAPSHOT"
+version = appVersion
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
